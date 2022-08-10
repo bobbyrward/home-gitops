@@ -1,0 +1,31 @@
+namespace: argo-cd
+resources:
+  - namespace.yaml
+  - sealed-secret-home-gitops-key.yaml
+  - ingress-route.yaml
+  - middleware.yaml
+helmCharts:
+  - name: argo-cd
+    releaseName: argo-cd
+    repo: https://argoproj.github.io/argo-helm
+    version: 4.10.5
+    includeCRDs: true
+    valuesInline:
+      controller:
+        enableStatefulSet: false
+        metrics:
+          enabled: false
+      dex:
+        enabled: false
+      redis:
+        enabled: true
+      server:
+        extraArgs:
+          - --insecure
+          - --rootpath
+          - /argo-cd
+        config:
+          kustomize.buildOptions: --enable-helm
+      configs:
+        secret:
+          argocdServerAdminPassword: "$2a$10$nq1IMrUGJ90.0zdnw0zgqerpt8emgVIwwdBB5F0jyJ5o7c0jkb/2W"
