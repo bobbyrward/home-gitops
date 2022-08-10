@@ -14,3 +14,7 @@ spec:
     path: applications
     repoURL: https://github.com/bobbyrward/home-gitops
     targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
