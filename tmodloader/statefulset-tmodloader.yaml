@@ -31,6 +31,9 @@ spec:
               mountPath: /root/.local/share/Terraria/tModLoader/Mods
             - name: tmodloader-serverconfig
               mountPath: /root/terraria-server/serverconfig.txt
+          readinessProbe:
+            tcpSocket:
+              port: 7777
       volumes:
         - name: tmodloader-worlds
           hostPath:
