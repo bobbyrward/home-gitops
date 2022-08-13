@@ -7,7 +7,7 @@ spec:
   ports:
     - port: 7777
       name: terraria
-      nodePort: 7777
+      nodePort: 30777
   selector:
     app.kubernetes.io/instance: tmodloader
     app.kubernetes.io/component: tmodloader
