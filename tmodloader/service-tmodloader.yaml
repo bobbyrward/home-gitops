@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tmodloader
+  namespace: tmodloader
+spec:
+  ports:
+    - port: 7777
+      name: terraria
+  clusterIP: None
+  selector:
+    app.kubernetes.io/instance: tmodloader
+    app.kubernetes.io/component: tmodloader

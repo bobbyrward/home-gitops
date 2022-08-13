@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tmodloader
+  namespace: tmodloader
+  labels:
+    app.kubernetes.io/name: tmodloader
+spec:
+  replicas: 1
+  serviceName: tmodloader
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tmodloader
+      app.kubernetes.io/component: tmodloader
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tmodloader
+        app.kubernetes.io/component: tmodloader
+    spec:
+      containers:
+        - image: ghcr.io/bobbyrward/tmodloader-docker:v0.0.1
+          name: tmodloader-docker
+          env:
+            - name: 
+          ports:
+            - containerPort: 7777
+              name: terraria
+          volumeMounts:
+            - name: tmodloader-worlds
+              mountPath: /root/.local/share/Terraria/tModLoader/Worlds
+            - name: tmodloader-mods
+              mountPath: /root/.local/share/Terraria/tModLoader/Mods
+            - name: tmodloader-serverconfig
+              mountPath: /root/terraria-server/serverconfig.txt
+      volumes:
+        - name: tmodloader-worlds
+          hostPath:
+            path: /home/null/games/tmodloader/Worlds
+            type: Directory
+        - name: tmodloader-mods
+          hostPath:
+            path: /home/null/games/tmodloader/Mods
+            type: Directory
+        - name: tmodloader-serverconfig
+          hostPath:
+            path: /home/null/games/tmodloader/serverconfig.txt
+            type: File
+      imagePullSecrets:
+        - name: tmodloader-pull-secret
